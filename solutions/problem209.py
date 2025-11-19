@@ -2,7 +2,7 @@ class Solution:
     def minSubArrayLen(self, target: int, nums: list[int]) -> int:
         first_index = 0
         last_index = 1
-        minimal_length = 10**4
+        minimal_length = 10**7
         sums = sum(nums[first_index:last_index])
         while last_index < len(nums):
             if sums < target:
@@ -21,7 +21,7 @@ class Solution:
             sums -= nums[first_index]
             first_index += 1
             sums
-        if minimal_length == 10**4:
+        if minimal_length == 10**7:
             return 0
         return minimal_length
 
