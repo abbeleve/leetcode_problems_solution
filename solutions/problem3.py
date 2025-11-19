@@ -7,8 +7,8 @@ class Solution:
         while last_pointer < len(s):
             indexofelem = substring.find(s[last_pointer])
             if indexofelem != -1:
-                first_pointer = indexofelem + 1
-                substring = s[first_pointer:last_pointer]
+                first_pointer += indexofelem + 1
+                substring = s[first_pointer:last_pointer + 1]
             else:
                 substring += s[last_pointer]
                 max_length_of_substring = max(max_length_of_substring, len(substring))
