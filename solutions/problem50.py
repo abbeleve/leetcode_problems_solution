@@ -13,10 +13,8 @@ class Solution:
             x = x * x
             if n % 2 == 1:
                 odd_multiplier *= base
-                print("True")
             n = n // 2
             base = x
-            print(f"n: {n}, x: {x}")
         
         x *= odd_multiplier
         if znak:
