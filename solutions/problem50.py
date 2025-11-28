@@ -7,16 +7,21 @@ class Solution:
         znak = n >= 0
 
         n = abs(n)
+        odd_multiplier = 1
         
-        while abs(n) > 1:
+        while n > 1:
             x = x * x
             if n % 2 == 1:
-                x = x * base
+                odd_multiplier *= base
+                print("True")
             n = n // 2
-
+            base = x
+            print(f"n: {n}, x: {x}")
+        
+        x *= odd_multiplier
         if znak:
             return x
         return 1 / x
     
 s = Solution()
-print(s.myPow(8.84372, -5))
+print(s.myPow(2, 5))
