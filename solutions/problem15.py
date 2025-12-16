@@ -18,10 +18,10 @@ class Solution:
                     if not(triplets_map.get(string)):
                         triplets.append([nums[left_index], nums[middle_index], nums[right_index]])
                         triplets_map[string] = True
-                    # while left_index + 1 < middle_index and nums[left_index + 1] == nums[left_index]:
-                    #     left_index += 1
-                    # while right_index - 1 > middle_index and nums[right_index - 1] == nums[right_index]:
-                    #     right_index -= 1
+                    while left_index + 1 < middle_index and nums[left_index + 1] == nums[left_index]:
+                        left_index += 1
+                    while right_index - 1 > middle_index and nums[right_index - 1] == nums[right_index]:
+                        right_index -= 1
 
                     left_index += 1
                     right_index -= 1
