@@ -1,6 +1,8 @@
 class Solution:
     def flatten(self, root: Optional[TreeNode]) -> None:
-        pass
+        stack = self.pre_order_traversal(root, [])
+        
+
     def pre_order_traversal(self, root, stack):
         if root.left is None and root.right is None:
             return root.val
