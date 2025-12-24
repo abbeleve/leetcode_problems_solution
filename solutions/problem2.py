@@ -1,29 +1,31 @@
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-from typing import Optional
-
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        str_n1 = ''
-        str_n2 = ''
-        node = l1
-        while True:
-            str_n1 = str(node.val) + str_n1
-            node = node.next
-            if node.next == None:
-                str_n1 = str(node.val) + str_n1
-                break
-        
-        node = l2
-        while True:
-            str_n2 = str(node.val) + str_n2
-            node = node.next
-            if node.next == None:
-                str_n2 = str(node.val) + str_n2
-                break
-
-        return [int(i) for i in str(int(str_n1) + int(str_n2))]
+        num = 0
+        power = 0
+        while l1 and l2:
+            num += pow(10, power) * (l1.val + l2.val)
+            l1 = l1.next
+            l2 = l2.next
+            power += 1
+            print(num, power)
+        while l1:
+            num += pow(10, power) * l1.val
+            l1 = l1.next
+            power += 1
+        while l2:
+            num += pow(10, power) * l2.val
+            l2 = l2.next
+            power += 1
+        print(num)
+        num = str(num)
+        list_of_nodes = []
+        for number_index in range(len(num) - 1, -1, -1):
+            list_of_nodes.append(ListNode(int(num[number_index]), None))
+        for node_index in range(len(list_of_nodes) - 1):
+            list_of_nodes[node_index].next = list_of_nodes[node_index + 1]
+        return list_of_nodes[0]
