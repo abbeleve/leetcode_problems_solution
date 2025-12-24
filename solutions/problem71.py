@@ -18,7 +18,6 @@ class Solution:
             if len(dir) == 0:
                 stack_of_dirs.pop(index)
         for dir in stack_of_dirs:
-            print(stack_of_dirs)
             path += "/" + dir
         if len(path) == 0:
             path = "/"
