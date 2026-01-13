@@ -8,7 +8,6 @@ class Solution:
             root = root.right
         return save_root
         
-
     def pre_order_traversal(self, root, stack):
         if root is None:
             return stack
