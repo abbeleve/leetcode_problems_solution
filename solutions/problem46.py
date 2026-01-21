@@ -2,7 +2,6 @@
 class Solution:
     def permute(self, nums: list[int]) -> list[list[int]]:
         self.combinations = []
-        self.short_combinations = []
         self.nums = nums
         self.backtrack(combination=[])
         return self.combinations
@@ -23,7 +22,6 @@ class Solution:
 class Solution:
     def permute(self, nums: list[int]) -> list[list[int]]:
         self.combinations = []
-        self.short_combinations = []
         self.nums = nums
         self.backtrack(combination=[])
         return self.combinations
@@ -43,7 +41,6 @@ class Solution:
 class Solution:
     def permute(self, nums: list[int]) -> list[list[int]]:
         self.combinations = []
-        self.short_combinations = []
         self.nums = nums
         self.backtrack(combination=[], hash_combination={})
         return self.combinations
@@ -60,7 +57,6 @@ class Solution:
             self.backtrack(combination, hash_combination)
             combination.pop()
             hash_combination.pop(var)
-
 
 s = Solution()
 print(s.permute([1,2,3]))
