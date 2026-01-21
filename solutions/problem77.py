@@ -77,7 +77,5 @@ class Solution:
             self.backtrack(combination, var + 1, n, k)
             combination.pop()
 
-
-
 s = Solution()
 print(s.combine(4, 2))
