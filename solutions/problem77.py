@@ -1,4 +1,4 @@
-#17% beaten
+#17% speed beaten
 class Solution:
     def combine(self, n: int, k: int) -> list[list[int]]:
         self.combinations = []
@@ -21,7 +21,7 @@ class Solution:
             # if new_combination not in self.combinations:
             #     self.backtrack(new_combination, n, k)
     
-#77.52% beaten
+#77.52% speed beaten
 class Solution:
     def combine(self, n: int, k: int) -> list[list[int]]:
         self.combinations = []
@@ -42,7 +42,7 @@ class Solution:
             self.backtrack(combination, n, k)
             combination.pop()
 
-#87.46% beaten
+#87.46% speed beaten
 class Solution:
     def combine(self, n: int, k: int) -> list[list[int]]:
         self.combinations = []
@@ -57,6 +57,26 @@ class Solution:
             combination.append(var)
             self.backtrack(combination, var + 1, n, k)
             combination.pop()
+
+#93% speed beaten
+class Solution:
+    def combine(self, n: int, k: int) -> list[list[int]]:
+        self.combinations = []
+        self.backtrack([], 1, n, k)
+        return self.combinations
+
+    def backtrack(self, combination, start, n, k):
+        if len(combination) == k:
+            self.combinations.append(combination[:])
+            return
+        for var in range(start, n + 1):
+            remaining = k - len(combination)
+            if n + 1 - var < remaining:
+                return
+            combination.append(var)
+            self.backtrack(combination, var + 1, n, k)
+            combination.pop()
+
 
 
 s = Solution()
