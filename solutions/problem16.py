@@ -14,9 +14,8 @@ class Solution:
                 elif summ < target:
                     left_index += 1
                 else:
-                    return target #returing closest summ to target
-                
-                print(closest)
+                    return target
+
         return closest
     
 s = Solution()
