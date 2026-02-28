@@ -6,14 +6,10 @@
 #         self.right = right
 class Solution:
     def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
-        hash_map, bfs_traversal, level = self.bfs(root)
-        result = [[] for _ in range(level + 1)]
-        for i, node in enumerate(bfs_traversal):
-            node_level = hash_map[node]
-            result[level - node_level].append(node.val)
-        for i in result:
-            i.sort()
-        return result
+        if root is None:
+            return []
+        result = self.bfs(root)
+        return result[::-1]
         
     def bfs(self, root):
         stack = [root]
@@ -23,9 +19,9 @@ class Solution:
         while len(stack) > 0:
             node = stack.pop(0)
             node_level = hash_map[node]
-            if len(result) < node_level:
-
-            result.append(node)
+            if len(result) - 1 < node_level:
+                result.append([])
+            result[node_level].insert(0, node.val)
             if node.right:
                 stack.append(node.right)
                 hash_map[node.right] = hash_map[node] + 1
@@ -34,7 +30,4 @@ class Solution:
                 stack.append(node.left)
                 hash_map[node.left] = hash_map[node] + 1
                 level = max(level, hash_map[node] + 1)
-        return hash_map, result, level
-
-s = Solution()
-print(s.levelOrderBottom())
+        return result
