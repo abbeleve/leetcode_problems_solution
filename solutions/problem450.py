@@ -6,6 +6,8 @@
 #         self.right = right
 class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if root is None:
+            return None
         if root.val == key:
             if root.left is None and root.right is None:
                 return None
