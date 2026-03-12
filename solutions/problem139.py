@@ -1,20 +1,28 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
-        self.word_hash_map = {}
-        self.minimal_word_length = 10**4
-        self.maximal_word_length = 0
-        for word in wordDict:
-            self.word_hash_map[word] = True
-            self.minimal_word_length = min(self.minimal_word_length, len(word))
-            self.maximal_word_length = max(self.maximal_word_length, len(word))
-        self.segments = []
         self.s = s
+        self.wordDict = wordDict
+        self.memo = {}
+        return self.backtrack("", 0, s, wordDict)
     
-    def backtracking(self, index, word_length):
-        if self.s[index - word_length + 1:index + 1] in self.word_hash_map:
-            self.segments.append(self.s[index - word_length + 1:index + 1])
-            word_length = self.minimal_word_length
-            index -= word_length
+    def backtrack(self, word, word_length, word_to_build, word_dict):
+        if word == word_to_build:
+            return True
+        
+        if word_length in self.memo:
+            return self.memo[word_length]
 
-        for word_length_ in range(word_length, self.maximal_word_length):
-            self.backtracking(index, word_length)
+        for word_chunk in word_dict:
+            if len(word_chunk) + word_length > len(word_to_build):
+                continue
+            if word_chunk == word_to_build[word_length:word_length+len(word_chunk)]:
+                new_word_length = word_length + len(word_chunk)
+                new_word = word + word_chunk
+                if self.backtrack(new_word, new_word_length, word_to_build, word_dict):
+                    self.memo[word_length] = True
+                    return True
+        self.memo[word_length] = False
+        return False
+    
+s = Solution()
+print(s.wordBreak(s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", wordDict = ["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]))
