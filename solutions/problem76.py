@@ -1,43 +1,31 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        left_pointer = 0
-        right_pointer = -1
-        result_left_pointer = 0
-        result_right_pointer = 10**5
-        num_of_letters = {letter:t.count(letter) for letter in t}
-        first_time_flag = False
-
-        while right_pointer < len(s) - 1:
-            moving_right = False
-            for letter in t:
-                if num_of_letters[letter] > 0:
-                    if s[left_pointer] in num_of_letters and num_of_letters[s[left_pointer]] == 0:
-                        moving_right = True
-                    else:
-                        first_time_flag = True
-                        break
-            if moving_right:
-                right_pointer += 1
-                if s[right_pointer] in num_of_letters:
-                    num_of_letters[s[right_pointer]] -= 1
-            else:
-                if s[left_pointer] in num_of_letters:
-                    num_of_letters[s[left_pointer]] += 1
+        if len(t) > len(s):
+            return ""
+        left_pointer, right_pointer = 0, 0
+        min_window = s + "!"
+        fully_inside = False
+        if len(t) > len(s):
+            return ""
+        hash_map = {}
+        for string in t:
+            hash_map[string] = hash_map.get(string, 0) + 1
+        have, need = 0, len(hash_map)
+        while right_pointer < len(s):
+            if s[right_pointer] in hash_map:
+                hash_map[s[right_pointer]] -= 1
+                if hash_map[s[right_pointer]] == 0:
+                    have += 1
+            right_pointer += 1
+            while have == need:
+                if right_pointer - left_pointer < len(min_window):
+                    min_window = s[left_pointer:right_pointer]
+                if s[left_pointer] in hash_map:
+                    hash_map[s[left_pointer]] += 1
+                    if hash_map[s[left_pointer]] > 0:
+                        have -= 1
                 left_pointer += 1
-                if first_time_flag:
-                    if result_right_pointer - result_left_pointer < right_pointer - left_pointer:
-                        result_right_pointer = right_pointer
-                        result_left_pointer = left_pointer
-        while left_pointer < right_pointer:
-            if s[left_pointer] in num_of_letters:
-                if num_of_letters[s[left_pointer]] == 0:
-                    break
-                num_of_letters[s[left_pointer]] += 1
-            left_pointer += 1
-        for letter in t:
-            if num_of_letters[letter] > 0:
-                return ""
-        return s[left_pointer:right_pointer + 1]
+        return min_window if min_window != s + "!" else ""
 
 s = Solution()
-print(s.minWindow(s = "ab", t = "a"))
+print(s.minWindow(s = "ADOBECODEBANC", t = "ABC"))
