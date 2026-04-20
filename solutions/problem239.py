@@ -14,7 +14,6 @@ class Solution:
                 continue
             if i > monotonic_stack[0] + k - 1:
                 monotonic_stack.popleft()
-            print(i)
             while len(monotonic_stack) > 0 and nums[i] > nums[monotonic_stack[-1]]:
                 monotonic_stack.pop()
             monotonic_stack.append(i)
