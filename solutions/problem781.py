@@ -20,5 +20,18 @@ class Solution:
                 continue
         return amount_of_rabbits
     
+import math
+class Solution:
+    def numRabbits(self, answers: list[int]) -> int:
+        amount_of_rabbits = 0
+        hash_map = {}
+        for answer in answers:
+            hash_map[answer] = hash_map.get(answer, 0) + 1
+        keys = hash_map.keys()
+        for key in keys:
+            group_size = math.ceil(hash_map[key] / (key + 1))
+            amount_of_rabbits += group_size * (key + 1)
+        return amount_of_rabbits
+    
 s = Solution()
 print(s.numRabbits([1,0,1,0,0]))
