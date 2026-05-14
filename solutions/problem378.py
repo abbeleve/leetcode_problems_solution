@@ -1,28 +1,30 @@
+import heapq
+
 class Solution:
     def kthSmallest(self, matrix: list[list[int]], k: int) -> int:
         self.matrix = matrix
-        height, width = len(matrix), len(matrix[0])
-        elems = []
-        stack = [[0, 0]]
-        while len(stack) > 0:
-            minimal_elem_index = stack[0]
-            minimal_elem_index_in_stack = 0
-            for index, elem in enumerate(stack):
-                if matrix[elem[0]][elem[1]] < matrix[minimal_elem_index[0]][minimal_elem_index[1]]:
-                    minimal_elem_index = elem
-                    minimal_elem_index_in_stack = index
-            elems.append(minimal_elem_index)
-            elem_index = minimal_elem_index
-            if elem_index[1] < width - 1:
-                shifted_element = [elem_index[0], elem_index[1] + 1]
-                if shifted_element not in stack and shifted_element not in elems:
-                    stack.append(shifted_element)
-            if elem_index[0] < height - 1:
-                shifted_element = [elem_index[0] + 1, elem_index[1]]
-                if shifted_element not in stack and shifted_element not in elems:
-                    stack.append(shifted_element)
-            stack.pop(minimal_elem_index_in_stack)
-        return matrix[elems[k - 1][0]][elems[k - 1][1]]
+        trie = [(0, 0)]
+        if k == 1:
+            return trie[0]
+        stack = [(0, 0)]
+
+        def get_neighbours(position: tuple):
+            i, j = position[0], position[1]
+            neighbours = []
+            if i != 0:
+                neighbours.append((i - 1, j))
+            if i != len(self.matrix) - 1:
+                neighbours.append((i + 1, j))
+            if j != 0:
+                neighbours.append((i, j - 1))
+            if j != len(self.matrix[0]) - 1:
+                neighbours.append((i, j + 1))
+            return neighbours
     
+        while len(stack) > 0:
+            node = stack.pop(0)
+            neighbours = get_neighbours(node)
+            
+        
 s = Solution()
 print(s.kthSmallest(matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8))
