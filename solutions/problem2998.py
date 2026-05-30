@@ -4,6 +4,7 @@ class Solution:
     def minimumOperationsToMakeEqual(self, x: int, y: int) -> int:
         if y >= x:
             return y - x
+        worst_case = x - y
         queue = deque([(x, 0)])
         visited = {x}
 
@@ -19,11 +20,11 @@ class Solution:
                 neighbours.append(curr // 5)
             
             for neighbour in neighbours:
-                if neighbour < 0 or neighbour > 10000:
-                    continue
                 if neighbour not in visited:
                     visited.add(neighbour)
                     queue.append((neighbour, steps + 1))
+            if steps >= x - y:
+                return worst_case
         return -1
 
 s = Solution()
