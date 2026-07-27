@@ -5,42 +5,31 @@
 #         self.next = next
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        if head is None:
-            return None
         if left == right:
             return head
         save_head = head
-        index = 1
-        prev_left_node = None
-        next_right_node = None
-
-        while head:
-            if index == left - 1:
-                prev_left_node = head
-            if index == right - 1:
-                prev_right_node = head
-                right_node = head.next
-                next_right_node = head.next.next
-            if index == left:
-                left_node = head
-                next_left_node = head.next
-            if index == right:
-                right_node = head
-            index += 1
+        max_k = right - left
+        first, last, prev_last = None, None, None
+        counter = 1
+        while counter < left:
+            if counter == left - 1:
+                first = head
             head = head.next
-
-        if left + 1 == right:
-            if prev_left_node:
-                prev_left_node.next = right_node
-            right_node.next = left_node
-            if next_right_node:
-                left_node.next = next_right_node
+            counter += 1
+            
+        def recurse(head, k):
+            nonlocal first, last, prev_last
+            if k == max_k:
+                last = head.next
+                prev_last = head
+                return head
+            node = recurse(head.next, k + 1)
+            node.next = head
+            return head
+        
+        head = recurse(head, 0)
+        head.next = last
+        if first is not None:
+            first.next = prev_last
             return save_head
-
-        if prev_left_node:
-            prev_left_node.next = right_node
-        right_node.next = next_left_node
-        prev_right_node.next = left_node
-        if next_right_node:
-            left_node.next = next_right_node
-        return save_head
+        return prev_last
